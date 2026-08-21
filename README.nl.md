@@ -2,6 +2,16 @@
 
 Een interactieve Engels/Nederlandse leeromgeving voor legale cybersecuritytraining op Kali Linux. De installatie is Engelstalig en laat iedere gebruiker afzonderlijk de lestaal en eventuele spreektaal kiezen.
 
+## Schermafbeeldingen
+
+### Dashboard en bèta-spraakfunctie
+
+![Nederlands Kali Labs-dashboard met ingeschakelde bèta-spraakfunctie](docs/images/dashboard-nl.png)
+
+### Begeleide les web-enumeration
+
+![Begeleide Nederlandse les web-enumeration met voorleesknop en privénotities](docs/images/guided-lesson-nl.png)
+
 ## Installatie
 
 ```bash

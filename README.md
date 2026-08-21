@@ -4,6 +4,16 @@ An interactive English/Dutch learning environment for legal cybersecurity traini
 
 Nederlandse documentatie: [README.nl.md](README.nl.md)
 
+## Screenshots
+
+### Dashboard and beta speech support
+
+![English Kali Labs dashboard with beta speech enabled](docs/images/dashboard-en.png)
+
+### Guided web-enumeration lesson
+
+![Guided English web-enumeration lesson with read-aloud control and private notes](docs/images/guided-lesson-en.png)
+
 ## Safety and scope
 
 Use security tools only on systems for which you have explicit permission. The example target in the included lessons is OWASP Juice Shop at `http://127.0.0.1:3000`. Other local services, LAN devices, and public hosts are not automatically in scope.
