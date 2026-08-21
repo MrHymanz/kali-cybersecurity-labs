@@ -31,5 +31,3 @@ Belangrijke optie:
 Let op de statusregel, `Content-Type`, server- of frameworkindicaties en eventuele securityheaders. Een ontbrekende header is een observatie, nog geen bewezen kwetsbaarheid.
 
 ## Behandelde onderwerpen
-
-- Les gestart; scope, methode en eerste passieve opdracht behandeld.

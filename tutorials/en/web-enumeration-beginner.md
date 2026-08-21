@@ -31,5 +31,3 @@ Important option:
 Look at the status line, `Content-Type`, server or framework indicators, and possible security headers. A missing header is an observation, not proof of a vulnerability.
 
 ## Topics covered
-
-- Lesson started; scope, method, and the first passive task were introduced.
