@@ -51,7 +51,7 @@
             <span class="pill" data-i18n="beginnerPath">BEGINNER PATH</span>
             <h2 data-i18n="heroTitle">Learn security by observing first.</h2>
             <p data-i18n="heroBody">Work through small, legal exercises. Every action is scoped, explained, and reviewable.</p>
-            <button class="primary-button" id="continueButton"><span data-i18n="continueLesson">Continue lesson</span><span aria-hidden="true">→</span></button>
+            <button class="primary-button" id="continueButton"><span data-i18n="continueLesson">Start lesson</span><span aria-hidden="true">→</span></button>
           </div>
           <div class="hero-orbit" aria-hidden="true"><span>HTTP</span><i></i><b>3000</b></div>
         </div>
@@ -61,6 +61,11 @@
           <article class="stat"><span data-i18n="permittedTarget">Permitted target</span><strong>127.0.0.1</strong><small>OWASP Juice Shop · :3000</small></article>
           <article class="stat"><span data-i18n="safetyMode">Safety mode</span><strong class="safe" data-i18n="allowlisted">Allowlisted</strong><small data-i18n="noFreeShell">No unrestricted shell execution</small></article>
         </div>
+
+        <section class="speech-setup" id="speechSetupPanel">
+          <div><p class="eyebrow" data-i18n="speechSetupLabel">SPEECH</p><h2 data-i18n="speechSetupTitle">Listen to lesson explanations</h2><p data-i18n="speechSetupBody">Install the local Piper voice for your selected lesson language. The voice stays on this computer.</p></div>
+          <button class="secondary-button" id="configureSpeechButton" data-i18n="enableSpeech">Enable speech</button>
+        </section>
 
         <div class="section-heading"><div><p class="eyebrow" data-i18n="currentModule">CURRENT MODULE</p><h2 data-i18n="availableLessons">Available lessons</h2></div></div>
         <div id="dashboardLessons" class="lesson-grid"></div>

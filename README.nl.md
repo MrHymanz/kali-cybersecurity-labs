@@ -20,6 +20,19 @@ Start na de installatie de lokale GUI:
 ./scripts/start-gui.sh
 ```
 
+Het startscript controleert Docker, start de bestaande container `juice-shop` als die
+stilstaat en wacht totdat het toegestane labtarget op `http://127.0.0.1:3000`
+bereikbaar is. De container moet vooraf zijn aangemaakt. Het script stopt de
+container niet wanneer je de GUI afsluit.
+
 Open daarna `http://127.0.0.1:8080`. Het dashboard bevat lessen, voortgang, privénotities, optionele spraak en veilige labacties. De server luistert alleen op `127.0.0.1` en biedt geen veld voor willekeurige shellcommando's. Stop de server met `Ctrl+C` in de terminal waarin je hem hebt gestart.
+
+### Spraak inschakelen
+
+Klik op het dashboard op **Spraak inschakelen**. De site installeert Piper in de
+lokale `.venv/` en downloadt alleen de vaste stem voor de gekozen lestaal. Deze
+bestanden en `.tts.conf` blijven lokaal en worden niet aan Git toegevoegd. Voor
+de installatie zijn internettoegang en PipeWire (`pw-play`) nodig. Daarna kun je
+in een geopende les de voorleesknop gebruiken.
 
 Zie de uitgebreide [Engelse README](README.md) voor vereisten, privacycontroles, projectstructuur en licentie-informatie.

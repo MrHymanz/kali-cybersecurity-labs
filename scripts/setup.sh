@@ -31,14 +31,14 @@ printf 'LESSON_LANGUAGE=%s\n' "${lesson_language}" > "${lab_config_file}"
 
 printf '%s\n' 'Optional speech support:'
 printf '%s\n' '  1) English (en_US-lessac-medium)'
-printf '%s\n' '  2) Nederlands / Dutch (nl_NL-mls-medium)'
+printf '%s\n' '  2) Nederlands / Dutch (nl_NL-alex-medium)'
 printf '%s\n' '  3) Disable speech'
 printf 'Choose 1, 2 or 3: '
 read -r choice
 
 case "${choice}" in
     1) voice_name="en_US-lessac-medium" ;;
-    2) voice_name="nl_NL-mls-medium" ;;
+    2) voice_name="nl_NL-alex-medium" ;;
     3)
         rm -f -- "${config_file}"
         printf 'Setup complete. Lesson language: %s. Speech is disabled.\n' "${lesson_language}"

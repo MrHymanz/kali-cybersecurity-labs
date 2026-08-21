@@ -50,18 +50,49 @@ if [[ ! "${text}" =~ [^[:space:]] ]]; then
     exit 0
 fi
 
-# Add new entries as "written term|spoken form". Keep longer or plural forms
-# before shorter related terms to make the intended precedence explicit.
+# Acronyms benefit from spelling with both the Dutch and English voices.
 pronunciation_dictionary=(
+    "HTTPS|H T T P S"
+    "HTTP|H T T P"
+    "JSON|J S O N"
+    "API|A P I"
+    "LAN|lan"
+    "URL|U R L"
+)
+
+# The Dutch voice needs help with English security terminology and mixed Dutch-
+# English compounds. Keep longer and plural forms before their shorter roots.
+if [[ "${VOICE_NAME}" == nl_* ]]; then
+    pronunciation_dictionary=(
+    "frameworkindicaties|freem-wurk-indicaties"
+    "technologie-indicaties|technologie-indicaties"
+    "browserweergave|brauwzer-weergave"
+    "netwerkrequests|netwerk-rie-kwests"
+    "securityheaders|sie-kjuh-rie-tieh, hedders"
+    "responseheaders|rie-spons-hedders"
+    "responsebody|rie-spons-boddie"
+    "HTTP-response|H T T P rie-spons"
+    "HTTP-headers|H T T P hedders"
+    "Content-Type|kontent-taip"
+    "Juice Shop-server|djoes sjop. sur-vur"
+    "Juice Shop|djoes sjop"
+    "labtargets|lab-tahr-kets"
     "Playwright|pleejwreit"
     "Docker|dokker"
     "labtarget|lab-tahr-ket"
     "target|tahr-ket"
-    "responseheaders|rie-spons-hedders"
     "beginnerstutorial|beginners-tutoriál"
+    "web-enumeration|web-ie-noe-me-ree-sjun"
     "webapplicatie|web-applicatie"
     "tutorial|tjoe-toorie-el"
+    "headers|hedders"
     "header|hedder"
+    "framework|freem-wurk"
+    "services|sur-visses"
+    "service|sur-vis"
+    "hosts|hoosts"
+    "host|hoost"
+    "server|sur-vur"
     "scope|skoop"
     "waarnemen|waar-neemen"
     "browsers|brauwzers"
@@ -80,11 +111,11 @@ pronunciation_dictionary=(
     "shells|sjels"
     "shell|sjel"
     "localhost|loo-kel-hoost"
-    "HTTPS|H T T P S"
-    "HTTP|H T T P"
-    "API|A P I"
-    "URL|U R L"
-)
+    "curl|kurl"
+    "Piper|paiper"
+    "${pronunciation_dictionary[@]}"
+    )
+fi
 
 replace_spoken_term() {
     local source="$1"

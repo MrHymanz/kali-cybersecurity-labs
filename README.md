@@ -48,6 +48,11 @@ Start the local interface after setup:
 ./scripts/start-gui.sh
 ```
 
+The start script checks Docker, starts the existing `juice-shop` container when
+needed, and waits for the permitted lab target at `http://127.0.0.1:3000` to
+become reachable. The container must already have been created. Stopping the GUI
+does not stop the container.
+
 Open `http://127.0.0.1:8080` in a browser. The interface provides:
 
 - an English/Dutch lesson dashboard;
@@ -55,6 +60,14 @@ Open `http://127.0.0.1:8080` in a browser. The interface provides:
 - optional text-to-speech;
 - clearly explained, allowlisted lab actions;
 - terminal output with interpretation prompts.
+
+### Enabling speech
+
+Select **Enable speech** on the dashboard. The site installs Piper in the local
+`.venv/` and downloads only the fixed voice for the selected lesson language.
+Those files and `.tts.conf` remain local and are excluded from Git. Internet
+access and PipeWire (`pw-play`) are required. You can then use the read-aloud
+button inside a lesson.
 
 The server listens only on `127.0.0.1`. It does not offer an unrestricted command field: each runnable action is defined server-side and tied to a specific lesson and permitted target. Press `Ctrl+C` in the starting terminal to stop it.
 

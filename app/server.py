@@ -23,6 +23,7 @@ ALLOWED_HOSTS = {"127.0.0.1", "localhost", "[::1]"}
 MAX_BODY = 32_768
 MAX_NOTE_LENGTH = 10_000
 MAX_SPEECH_LENGTH = 1_000
+SPEECH_SETUP_TIMEOUT = 600
 
 LESSONS = {
     "web-enumeration-beginner": {
@@ -232,6 +233,9 @@ class LabHandler(SimpleHTTPRequestHandler):
             if path == "/api/speak":
                 self._speak(payload)
                 return
+            if path == "/api/speech/configure":
+                self._configure_speech(payload)
+                return
             self._send_json(HTTPStatus.NOT_FOUND, {"error": "Endpoint not found"})
         except (ValueError, json.JSONDecodeError) as exc:
             self._send_json(HTTPStatus.BAD_REQUEST, {"error": str(exc)})
@@ -281,6 +285,31 @@ class LabHandler(SimpleHTTPRequestHandler):
             self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": result.stderr.strip() or "Speech failed"})
             return
         self._send_json(HTTPStatus.ACCEPTED, {"started": True})
+
+    def _configure_speech(self, payload: dict) -> None:
+        language = payload.get("language")
+        if language not in {"en", "nl"}:
+            raise ValueError("Unsupported speech language")
+        try:
+            result = subprocess.run(
+                [str(PROJECT_DIR / "scripts" / "setup-speech.sh"), language],
+                cwd=PROJECT_DIR,
+                capture_output=True,
+                text=True,
+                timeout=SPEECH_SETUP_TIMEOUT,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            self._send_json(HTTPStatus.GATEWAY_TIMEOUT, {"error": "Speech setup timed out"})
+            return
+        if result.returncode:
+            error = (result.stderr or result.stdout).strip()
+            self._send_json(
+                HTTPStatus.INTERNAL_SERVER_ERROR,
+                {"error": error[-2_000:] or "Speech setup failed"},
+            )
+            return
+        self._send_json(HTTPStatus.OK, {"configured": True})
 
 
 def main() -> None:

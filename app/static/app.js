@@ -3,7 +3,7 @@ const translations = {
     brandSubtitle: "Guided cybersecurity practice", dashboard: "Dashboard", lessons: "Lessons", notes: "Notes",
     scopeTitle: "Lab scope active", scopeWarning: "Only explicitly permitted lab targets may be tested.", workspace: "LEARNING WORKSPACE",
     language: "Language", beginnerPath: "BEGINNER PATH", heroTitle: "Learn security by observing first.",
-    heroBody: "Work through small, legal exercises. Every action is scoped, explained, and reviewable.", continueLesson: "Continue lesson",
+    heroBody: "Work through small, legal exercises. Every action is scoped, explained, and reviewable.", continueLesson: "Start lesson",
     progress: "Progress", permittedTarget: "Permitted target", safetyMode: "Safety mode", allowlisted: "Allowlisted",
     noFreeShell: "No unrestricted shell execution", currentModule: "CURRENT MODULE", availableLessons: "Available lessons",
     guidedLearning: "GUIDED LEARNING", lessonLibrary: "Lesson library", openLesson: "Open lesson", completed: "Completed", notStarted: "Not started",
@@ -14,13 +14,15 @@ const translations = {
     notesPrivate: "Saved only on this computer and never added to Git.", notesPlaceholder: "Record facts, hypotheses, and questions...",
     saveNotes: "Save notes", saved: "Saved", notesHeading: "Private learning notes",
     notesIntro: "Open a lesson to record observations. Notes stay in .local/ and are excluded from Git.", openLessons: "Open lessons",
-    speechOn: "Speech ready", speechOff: "Speech off", requestFailed: "Request failed", lessonComplete: "Lesson progress updated"
+    speechOn: "Speech ready", speechOff: "Speech off", requestFailed: "Request failed", lessonComplete: "Lesson progress updated",
+    speechSetupLabel: "SPEECH", speechSetupTitle: "Listen to lesson explanations", speechSetupBody: "Install the local Piper voice for your selected lesson language. The voice stays on this computer.",
+    enableSpeech: "Enable speech", installingSpeech: "Installing voice…", speechEnabled: "Speech enabled"
   },
   nl: {
     brandSubtitle: "Begeleide cybersecuritytraining", dashboard: "Dashboard", lessons: "Lessen", notes: "Notities",
     scopeTitle: "Labscope actief", scopeWarning: "Test alleen expliciet toegestane labtargets.", workspace: "LEEROMGEVING",
     language: "Taal", beginnerPath: "BEGINNERSTRAJECT", heroTitle: "Leer security door eerst te observeren.",
-    heroBody: "Werk met kleine, legale oefeningen. Iedere actie heeft een duidelijke scope, uitleg en controleerbaar resultaat.", continueLesson: "Ga verder met de les",
+    heroBody: "Werk met kleine, legale oefeningen. Iedere actie heeft een duidelijke scope, uitleg en controleerbaar resultaat.", continueLesson: "Start de les",
     progress: "Voortgang", permittedTarget: "Toegestaan target", safetyMode: "Veiligheidsmodus", allowlisted: "Toegestane acties",
     noFreeShell: "Geen onbeperkte shell-uitvoering", currentModule: "HUIDIGE MODULE", availableLessons: "Beschikbare lessen",
     guidedLearning: "BEGELEID LEREN", lessonLibrary: "Lesbibliotheek", openLesson: "Open les", completed: "Voltooid", notStarted: "Niet gestart",
@@ -31,7 +33,9 @@ const translations = {
     notesPrivate: "Alleen opgeslagen op deze computer en nooit toegevoegd aan Git.", notesPlaceholder: "Noteer feiten, hypotheses en vragen...",
     saveNotes: "Notities opslaan", saved: "Opgeslagen", notesHeading: "Persoonlijke leernotities",
     notesIntro: "Open een les om observaties vast te leggen. Notities blijven in .local/ en zijn uitgesloten van Git.", openLessons: "Open lessen",
-    speechOn: "Spraak gereed", speechOff: "Spraak uit", requestFailed: "Opdracht mislukt", lessonComplete: "Lesvoortgang bijgewerkt"
+    speechOn: "Spraak gereed", speechOff: "Spraak uit", requestFailed: "Opdracht mislukt", lessonComplete: "Lesvoortgang bijgewerkt",
+    speechSetupLabel: "SPRAAK", speechSetupTitle: "Luister naar de lesuitleg", speechSetupBody: "Installeer de lokale Piper-stem voor de gekozen lestaal. De stem blijft op deze computer.",
+    enableSpeech: "Spraak inschakelen", installingSpeech: "Stem installeren…", speechEnabled: "Spraak ingeschakeld"
   }
 };
 
@@ -62,6 +66,9 @@ function applyLanguage() {
   $$('[data-i18n-placeholder]').forEach((node) => { node.placeholder = t(node.dataset.i18nPlaceholder); });
   $("#languageSelect").value = state.language;
   $("#speechBadge").textContent = state.speechConfigured ? t("speechOn") : t("speechOff");
+  $("#speechSetupPanel").classList.toggle("configured", state.speechConfigured);
+  $("#configureSpeechButton").textContent = state.speechConfigured ? t("speechEnabled") : t("enableSpeech");
+  $("#configureSpeechButton").disabled = state.speechConfigured;
   renderLessons();
   updateProgress();
 }
@@ -179,6 +186,22 @@ async function speakLesson() {
   catch (error) { toast(error.message, true); }
 }
 
+async function configureSpeech() {
+  const button = $("#configureSpeechButton");
+  button.disabled = true;
+  button.textContent = t("installingSpeech");
+  try {
+    await api("/api/speech/configure", { method: "POST", body: JSON.stringify({ language: state.language }) });
+    state.speechConfigured = true;
+    applyLanguage();
+    toast(t("speechEnabled"));
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = t("enableSpeech");
+    toast(error.message, true);
+  }
+}
+
 async function init() {
   try {
     Object.assign(state, await api("/api/state"));
@@ -193,6 +216,7 @@ $("#runButton").addEventListener("click", runAction);
 $("#saveNotesButton").addEventListener("click", saveNotes);
 $("#completeCheckbox").addEventListener("change", setComplete);
 $("#speakButton").addEventListener("click", speakLesson);
+$("#configureSpeechButton").addEventListener("click", configureSpeech);
 $("#menuButton").addEventListener("click", () => document.body.classList.toggle("menu-open"));
 $("#languageSelect").addEventListener("change", async (event) => {
   try {
