@@ -15,6 +15,7 @@ voices/
 *.onnx.json
 .tts.conf
 .lab.conf
+.local/
 
 # User-specific learning data and generated output
 notes/*

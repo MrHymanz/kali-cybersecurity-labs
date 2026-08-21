@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Kali Cybersecurity Labs</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard" aria-label="Kali Cybersecurity Labs home">
+        <span class="brand-mark" aria-hidden="true">K</span>
+        <span><strong>Kali Labs</strong><small data-i18n="brandSubtitle">Guided cybersecurity practice</small></span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <button class="nav-item active" data-view="dashboard"><span aria-hidden="true">⌂</span><span data-i18n="dashboard">Dashboard</span></button>
+        <button class="nav-item" data-view="lessons"><span aria-hidden="true">▤</span><span data-i18n="lessons">Lessons</span></button>
+        <button class="nav-item" data-view="notes"><span aria-hidden="true">✎</span><span data-i18n="notes">Notes</span></button>
+      </nav>
+      <div class="scope-card">
+        <span class="status-dot"></span>
+        <div><strong data-i18n="scopeTitle">Lab scope active</strong><small>127.0.0.1:3000</small></div>
+      </div>
+      <p class="sidebar-warning" data-i18n="scopeWarning">Only explicitly permitted lab targets may be tested.</p>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button id="menuButton" class="icon-button menu-button" aria-label="Open menu">☰</button>
+        <div>
+          <p class="eyebrow" data-i18n="workspace">LEARNING WORKSPACE</p>
+          <h1 id="pageTitle" data-i18n="dashboard">Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <label class="language-picker">
+            <span data-i18n="language">Language</span>
+            <select id="languageSelect">
+              <option value="en">English</option>
+              <option value="nl">Nederlands</option>
+            </select>
+          </label>
+          <span id="speechBadge" class="badge"></span>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view active">
+        <div class="hero">
+          <div>
+            <span class="pill" data-i18n="beginnerPath">BEGINNER PATH</span>
+            <h2 data-i18n="heroTitle">Learn security by observing first.</h2>
+            <p data-i18n="heroBody">Work through small, legal exercises. Every action is scoped, explained, and reviewable.</p>
+            <button class="primary-button" id="continueButton"><span data-i18n="continueLesson">Continue lesson</span><span aria-hidden="true">→</span></button>
+          </div>
+          <div class="hero-orbit" aria-hidden="true"><span>HTTP</span><i></i><b>3000</b></div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat"><span data-i18n="progress">Progress</span><strong id="progressValue">0%</strong><div class="progress-track"><i id="progressBar"></i></div></article>
+          <article class="stat"><span data-i18n="permittedTarget">Permitted target</span><strong>127.0.0.1</strong><small>OWASP Juice Shop · :3000</small></article>
+          <article class="stat"><span data-i18n="safetyMode">Safety mode</span><strong class="safe" data-i18n="allowlisted">Allowlisted</strong><small data-i18n="noFreeShell">No unrestricted shell execution</small></article>
+        </div>
+
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="currentModule">CURRENT MODULE</p><h2 data-i18n="availableLessons">Available lessons</h2></div></div>
+        <div id="dashboardLessons" class="lesson-grid"></div>
+      </section>
+
+      <section id="lessonsView" class="view">
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="guidedLearning">GUIDED LEARNING</p><h2 data-i18n="lessonLibrary">Lesson library</h2></div></div>
+        <div id="lessonLibrary" class="lesson-grid"></div>
+      </section>
+
+      <section id="lessonView" class="view">
+        <button class="text-button" id="backButton">← <span data-i18n="backToLessons">Back to lessons</span></button>
+        <div class="lesson-layout">
+          <article class="lesson-panel">
+            <div class="lesson-title-row">
+              <div><p class="eyebrow" data-i18n="guidedLesson">GUIDED LESSON</p><h2 id="lessonTitle"></h2></div>
+              <button id="speakButton" class="icon-button" title="Read lesson aloud" aria-label="Read lesson aloud">◖))</button>
+            </div>
+            <div id="lessonContent" class="markdown"></div>
+            <div class="task-card">
+              <p class="eyebrow" data-i18n="safeLabAction">SAFE LAB ACTION</p>
+              <p data-i18n="actionExplanation">Request only the response headers from the explicitly permitted Juice Shop target.</p>
+              <code id="commandPreview"></code>
+              <button id="runButton" class="primary-button"><span data-i18n="runAction">Run safe action</span><span aria-hidden="true">▶</span></button>
+            </div>
+            <div id="resultPanel" class="result-panel hidden">
+              <div><strong data-i18n="result">Result</strong><span id="exitBadge" class="badge"></span></div>
+              <pre id="commandOutput"></pre>
+              <div class="interpretation">
+                <strong data-i18n="yourTurn">Your turn</strong>
+                <p data-i18n="interpretPrompt">What can you conclude from this output, and what remains uncertain?</p>
+              </div>
+            </div>
+            <label class="complete-check"><input id="completeCheckbox" type="checkbox"><span data-i18n="markComplete">Mark this lesson complete</span></label>
+          </article>
+          <aside class="notes-panel">
+            <p class="eyebrow" data-i18n="privateNotes">PRIVATE NOTES</p>
+            <h3 data-i18n="observations">Your observations</h3>
+            <p data-i18n="notesPrivate">Saved only on this computer and never added to Git.</p>
+            <textarea id="lessonNotes" maxlength="10000" data-i18n-placeholder="notesPlaceholder" placeholder="Record facts, hypotheses, and questions..."></textarea>
+            <div class="save-row"><span id="saveStatus"></span><button id="saveNotesButton" class="secondary-button" data-i18n="saveNotes">Save notes</button></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="notesView" class="view">
+        <div class="empty-state"><span aria-hidden="true">✎</span><h2 data-i18n="notesHeading">Private learning notes</h2><p data-i18n="notesIntro">Open a lesson to record observations. Notes stay in .local/ and are excluded from Git.</p><button class="primary-button" data-view="lessons" data-i18n="openLessons">Open lessons</button></div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

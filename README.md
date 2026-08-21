@@ -40,9 +40,28 @@ Test optional speech with:
 ./scripts/speak.sh --text "De leeromgeving is klaar voor gebruik."
 ```
 
+## Graphical interface
+
+Start the local interface after setup:
+
+```bash
+./scripts/start-gui.sh
+```
+
+Open `http://127.0.0.1:8080` in a browser. The interface provides:
+
+- an English/Dutch lesson dashboard;
+- local progress and private notes;
+- optional text-to-speech;
+- clearly explained, allowlisted lab actions;
+- terminal output with interpretation prompts.
+
+The server listens only on `127.0.0.1`. It does not offer an unrestricted command field: each runnable action is defined server-side and tied to a specific lesson and permitted target. Press `Ctrl+C` in the starting terminal to stop it.
+
 ## Project structure
 
 - `tutorials/en/` and `tutorials/nl/` — shared lessons in both languages
+- `app/` — dependency-free local web interface and server
 - `scripts/` — setup and helper scripts
 - `notes/` — local learning notes; only templates are tracked
 - `output/` — local, relevant tool output; contents are not tracked

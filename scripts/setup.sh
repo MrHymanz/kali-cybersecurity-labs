@@ -42,6 +42,7 @@ case "${choice}" in
     3)
         rm -f -- "${config_file}"
         printf 'Setup complete. Lesson language: %s. Speech is disabled.\n' "${lesson_language}"
+        printf '%s\n' 'Start the graphical interface with: ./scripts/start-gui.sh'
         exit 0
         ;;
     *)
@@ -79,3 +80,4 @@ printf 'Downloading voice model %s...\n' "${voice_name}"
 printf 'VOICE_NAME=%s\n' "${voice_name}" > "${config_file}"
 printf 'Setup complete. Lesson language: %s. Voice: %s\n' "${lesson_language}" "${voice_name}"
 printf '%s\n' 'Test with: ./scripts/speak.sh --text "This is a test."'
+printf '%s\n' 'Start the graphical interface with: ./scripts/start-gui.sh'
