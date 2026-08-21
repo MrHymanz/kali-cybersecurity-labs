@@ -1,0 +1,37 @@
+# Local Codex/browser state
+.agents/
+.codex/
+.playwright-mcp/
+:memory:.ses
+
+# Python and local virtual environments
+.venv/
+__pycache__/
+*.py[cod]
+
+# Downloaded Piper voices and local voice choice
+voices/
+*.onnx
+*.onnx.json
+.tts.conf
+.lab.conf
+
+# User-specific learning data and generated output
+notes/*
+!notes/README.md
+!notes/template.en.md
+!notes/template.nl.md
+output/*
+!output/README.md
+
+# Secrets and editor/OS files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+.DS_Store
+.idea/
+.vscode/
+*~
