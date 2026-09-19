@@ -81,6 +81,24 @@ button inside a lesson.
 
 The server listens only on `127.0.0.1`. It does not offer an unrestricted command field: each runnable action is defined server-side and tied to a specific lesson and permitted target. Press `Ctrl+C` in the starting terminal to stop it.
 
+### Optional AI guidance
+
+Open **Settings** to select a local Ollama server, an OpenAI-compatible server,
+or OpenAI. You control whether lesson material, command output, and notes are
+included in each review. Ollama is restricted to a loopback address; external
+providers are identified with a privacy warning.
+
+API keys are used only by the local Python server, are never returned to the
+browser, and are stored under the Git-ignored `.local/` directory with `0600`
+permissions. For OpenAI, `OPENAI_API_KEY` can be used instead and takes
+precedence over a locally stored key.
+
+An API connection is optional. In an open lesson, select **Copy for
+ChatGPT/Codex** to place the lesson name, scope, command, output, notes, and a
+teaching prompt on the clipboard. Paste that text into an existing ChatGPT or
+Codex conversation. This manual route uses the user's normal subscription,
+requires no API key, and sends nothing from the lab interface itself.
+
 ## Project structure
 
 - `tutorials/en/` and `tutorials/nl/` — shared lessons in both languages

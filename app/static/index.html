@@ -18,6 +18,7 @@
         <button class="nav-item active" data-view="dashboard"><span aria-hidden="true">⌂</span><span data-i18n="dashboard">Dashboard</span></button>
         <button class="nav-item" data-view="lessons"><span aria-hidden="true">▤</span><span data-i18n="lessons">Lessons</span></button>
         <button class="nav-item" data-view="notes"><span aria-hidden="true">✎</span><span data-i18n="notes">Notes</span></button>
+        <button class="nav-item" data-view="settings"><span aria-hidden="true">⚙</span><span data-i18n="settings">Settings</span></button>
       </nav>
       <div class="scope-card">
         <span class="status-dot"></span>
@@ -107,12 +108,47 @@
             <p data-i18n="notesPrivate">Saved only on this computer and never added to Git.</p>
             <textarea id="lessonNotes" maxlength="10000" data-i18n-placeholder="notesPlaceholder" placeholder="Record facts, hypotheses, and questions..."></textarea>
             <div class="save-row"><span id="saveStatus"></span><button id="saveNotesButton" class="secondary-button" data-i18n="saveNotes">Save notes</button></div>
+            <div class="manual-discussion">
+              <p class="eyebrow" data-i18n="useSubscription">USE YOUR EXISTING SUBSCRIPTION</p>
+              <h3 data-i18n="copyDiscussionTitle">Discuss in ChatGPT or Codex</h3>
+              <p data-i18n="copyDiscussionIntro">Copy your lesson context and notes, then paste them into an existing ChatGPT or Codex conversation. No API key is needed.</p>
+              <button id="copyDiscussionButton" class="secondary-button" data-i18n="copyForDiscussion">Copy for ChatGPT/Codex</button>
+            </div>
+            <div class="ai-review">
+              <p class="eyebrow" data-i18n="aiTeacher">AI TEACHER</p>
+              <p id="aiPrivacySummary"></p>
+              <button id="reviewButton" class="primary-button" data-i18n="reviewWithAi">Discuss with AI</button>
+              <div id="aiFeedback" class="feedback hidden" aria-live="polite"></div>
+            </div>
           </aside>
         </div>
       </section>
 
       <section id="notesView" class="view">
         <div class="empty-state"><span aria-hidden="true">✎</span><h2 data-i18n="notesHeading">Private learning notes</h2><p data-i18n="notesIntro">Open a lesson to record observations. Notes stay in .local/ and are excluded from Git.</p><button class="primary-button" data-view="lessons" data-i18n="openLessons">Open lessons</button></div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="settings-panel">
+          <p class="eyebrow" data-i18n="aiSettingsLabel">AI GUIDANCE</p>
+          <h2 data-i18n="aiSettingsTitle">Choose your AI backend</h2>
+          <p data-i18n="aiSettingsIntro">Choose whether you want to copy work to an existing chat, or connect the lab directly to an API.</p>
+          <div class="ai-choice-grid">
+            <article class="ai-choice recommended"><span class="badge" data-i18n="easiest">Easiest</span><h3 data-i18n="manualChoiceTitle">Copy to ChatGPT or Codex</h3><p data-i18n="manualChoiceBody">Use the copy button in a lesson and paste the text into your existing ChatGPT or Codex conversation. This uses your normal account and needs no API key.</p></article>
+            <article class="ai-choice"><span class="badge" data-i18n="integrated">Integrated</span><h3 data-i18n="apiChoiceTitle">Connect an AI API</h3><p data-i18n="apiChoiceBody">Receive feedback inside this webpage. OpenAI requires a separate Platform API key and API billing; ChatGPT Plus alone does not provide this. Ollama can run locally without an API account.</p></article>
+          </div>
+          <h3 class="provider-heading" data-i18n="apiConfiguration">API configuration</h3>
+          <form id="aiSettingsForm">
+            <label><span data-i18n="provider">Provider</span><select id="aiProvider"><option value="none" data-i18n="providerNone">No AI</option><option value="ollama">Ollama (local)</option><option value="openai-compatible">OpenAI-compatible</option><option value="openai">OpenAI</option></select></label>
+            <label id="baseUrlField"><span data-i18n="serverAddress">Server address</span><input id="aiBaseUrl" type="url" placeholder="http://127.0.0.1:11434"></label>
+            <label><span data-i18n="model">Model</span><input id="aiModel" type="text" maxlength="200" placeholder="llama3.2"></label>
+            <label id="apiKeyField"><span data-i18n="apiKey">API key</span><input id="aiApiKey" type="password" maxlength="500" autocomplete="new-password" data-i18n-placeholder="apiKeyPlaceholder" placeholder="Leave blank to keep the stored key"></label>
+            <fieldset><legend data-i18n="sharedData">Data included in a review</legend><label class="check-row"><input id="sendLesson" type="checkbox"><span data-i18n="shareLesson">Lesson material</span></label><label class="check-row"><input id="sendOutput" type="checkbox"><span data-i18n="shareOutput">Command output</span></label><label class="check-row"><input id="sendNotes" type="checkbox"><span data-i18n="shareNotes">Your answer and notes</span></label></fieldset>
+            <div id="externalWarning" class="privacy-warning hidden" data-i18n="externalWarning">This provider can send the selected lesson data outside this computer.</div>
+            <div class="settings-actions"><button type="submit" class="primary-button" data-i18n="saveSettings">Save settings</button><button type="button" id="testAiButton" class="secondary-button" data-i18n="testConnection">Test connection</button></div>
+            <p id="aiSettingsStatus" class="settings-status" aria-live="polite"></p>
+          </form>
+        </div>
       </section>
     </main>
   </div>
